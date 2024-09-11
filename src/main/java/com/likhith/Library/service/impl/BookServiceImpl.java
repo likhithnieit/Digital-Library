@@ -52,7 +52,15 @@ public class BookServiceImpl implements BookService {
         for(int i = 0;i < bookList.size(); i++){
             if (bookList.get(i).getId().equals(bookId)) index = i;
         }
-        if (index != -1) bookList.get(index).getReviewList().add(review);
+        if (index != -1){
+            if(bookList.get(index).getReviewList() == null){
+                List<Review> r = new ArrayList<>();
+                r.add(review);
+                bookList.get(index).setReviewList(r);
+            }else {
+                bookList.get(index).getReviewList().add(review);
+            }
+        }
     }
 
     @Override
@@ -62,5 +70,13 @@ public class BookServiceImpl implements BookService {
             if (bookList.get(i).getId().equals(id)) index = i;
         }
         if(index != -1) bookList.remove(index);
+    }
+    @Override
+    public List<Review> getReviews(String id){
+        int index = -1;
+        for(int i = 0;i < bookList.size(); i++){
+            if (bookList.get(i).getId().equals(id)) index = i;
+        }
+        return bookList.get(index).getReviewList();
     }
 }

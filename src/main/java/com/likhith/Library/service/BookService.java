@@ -15,4 +15,6 @@ public interface BookService {
     public Book updateBook(String id, Book book);
 
     public void addReview(String id, Review review);
+
+    public List<Review> getReviews(String id);
 }
