@@ -4,6 +4,7 @@ import com.likhith.Library.domain.Book;
 import com.likhith.Library.domain.Review;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BookService {
     public void addBook(Book book);

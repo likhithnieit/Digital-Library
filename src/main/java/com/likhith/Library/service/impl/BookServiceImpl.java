@@ -5,78 +5,61 @@ import com.likhith.Library.domain.Review;
 import com.likhith.Library.service.BookService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class BookServiceImpl implements BookService {
-    List<Book> bookList = new ArrayList<>();
+    Map<String,Book> bookMap = new HashMap<>();
     @Override
     public void addBook(Book book){
-        Integer id = new Random().nextInt(1000,9999);
-        book.setId(String.valueOf(id));
-        bookList.add(book);
+        book.setId(String.valueOf(new Random().nextInt(1000,9999)));
+        bookMap.put(book.getId(),book);
     }
 
     @Override
     public List<Book> getAllBooks() {
-        return bookList;
+        return new ArrayList<>(bookMap.values());
     }
 
     @Override
     public Book getBook(String id) {
-        int index = -1;
-        for(int i = 0;i < bookList.size(); i++){
-            if(bookList.get(i).getId().equals(id)) index = i;
-        }
-        if (index != -1) return bookList.get(index);
-
-        return null;
+        Book book = bookMap.getOrDefault(id,null);
+        return book;
     }
 
     @Override
     public Book updateBook(String id, Book book) {
-        int index = -1;
-        for(int i = 0;i < bookList.size(); i++){
-            if (bookList.get(i).getId().equals(id)) index = i;
+        if (bookMap.containsKey(id)) {
+            bookMap.put(id, book);
         }
-        if(index != -1) bookList.set(index,book);
-
-        return bookList.get(index);
+        return book;
     }
 
     @Override
     public void addReview(String bookId, Review review) {
-        int index = -1;
-        for(int i = 0;i < bookList.size(); i++){
-            if (bookList.get(i).getId().equals(bookId)) index = i;
-        }
-        if (index != -1){
-            if(bookList.get(index).getReviewList() == null){
+        Book book = bookMap.getOrDefault(bookId,null);
+        if(book != null){
+            if(book.getReviewList() == null){
                 List<Review> r = new ArrayList<>();
                 r.add(review);
-                bookList.get(index).setReviewList(r);
-            }else {
-                bookList.get(index).getReviewList().add(review);
+                book.setReviewList(r);
+            }else{
+                book.getReviewList().add(review);
             }
         }
+        bookMap.put(bookId,book);
     }
 
     @Override
     public void deleteBook(String id) {
-        int index = -1;
-        for(int i = 0;i < bookList.size(); i++){
-            if (bookList.get(i).getId().equals(id)) index = i;
-        }
-        if(index != -1) bookList.remove(index);
+        bookMap.remove(id);
     }
     @Override
     public List<Review> getReviews(String id){
-        int index = -1;
-        for(int i = 0;i < bookList.size(); i++){
-            if (bookList.get(i).getId().equals(id)) index = i;
+        Book book = bookMap.getOrDefault(id,null);
+        if (book != null){
+            return book.getReviewList();
         }
-        return bookList.get(index).getReviewList();
+        return null;
     }
 }
