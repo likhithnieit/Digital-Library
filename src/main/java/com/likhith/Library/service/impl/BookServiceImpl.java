@@ -7,11 +7,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 @Service
 public class BookServiceImpl implements BookService {
     List<Book> bookList = new ArrayList<>();
     @Override
     public void addBook(Book book){
+        Integer id = new Random().nextInt(1000,9999);
+        book.setId(String.valueOf(id));
         bookList.add(book);
     }
 

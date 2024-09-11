@@ -12,13 +12,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Book {
-    private String id;
+    private String id; //not part of request
     private String title;
     private String author;
     private Genre genre;
-    private Double rating;
+    private Double rating; //not part of request
     private Double cost;
-    private List<Review> reviewList;
+    private List<Review> reviewList; //not part of request
     private Integer year;
 
 }
