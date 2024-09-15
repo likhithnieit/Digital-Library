@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @GetMapping("/book/{id}")
-    public ResponseEntity<Book> getBook(@PathVariable("id") String id){
+    public ResponseEntity<Book> getBook(@PathVariable("id") Integer id){
         Book t = bookService.getBook(id);
         if(t==null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<>(t,HttpStatus.OK);
@@ -36,4 +36,5 @@ public class UserController {
     public ResponseEntity<List<Review>> getReviews(@PathVariable("bookId") String bookId){
         return new ResponseEntity(bookService.getReviews(bookId),HttpStatus.OK);
     }
+
 }
