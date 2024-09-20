@@ -19,7 +19,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public void addBook(Book book){
         book.setRating(0.0);
-        bookRepository.save(book);
+        bookRepository.save(book); //insert into book where id = book.id;
     }
 
     @Override
@@ -71,4 +71,5 @@ public class BookServiceImpl implements BookService {
 //        }
         return null;
     }
+
 }
